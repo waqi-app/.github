@@ -33,6 +33,8 @@ All engines also write to a shared correlation store, so a number reported on a 
 |---|---|
 | [`waqi-app`](../../waqi-app) | React Native app, Android native modules, Supabase migrations and functions, the Docker link/QR sandbox, docs and the project website |
 | [`waqi-ml`](../../waqi-ml) | Training and evaluation code for the message model, receipt forensics, and the orchestrator |
+| [`waqi-website`](../../waqi-website) | Public landing page for the project, hosted with GitHub Pages |
+| [`WAQI-QR`](../../WAQI-QR) | QR awareness campaign: QR tracking, scam simulation, and admin dashboard |
 
 Datasets and trained models live in our private Hugging Face organization, not in git.
 
