@@ -1,20 +1,45 @@
-# WAQI — Unified Scam Prevention for Egypt
+# WAQI: A Unified Scam Prevention Application
 
-One app, one verdict, explained in plain language. Graduation project, FCIS Ain Shams 2026–2027.
+**One app that checks every channel scammers use in Egypt, and gives you one clear answer.**
 
-**The problem:** scams in Egypt are met with awareness campaigns. They inform, but they don't protect at the moment a scam arrives. WAQI acts at that moment: it checks the message, link, QR code, or receipt for you.
+WAQI is a graduation project by a team of 6. It's built to catch scams that span several channels at once: a fake InstaPay screenshot on WhatsApp, a cloned website behind a QR code, a scam call followed by a text from the same number.
 
-## Repos
+## Who it's for
 
-| Repo | What it is |
+People in Egypt who get paid informally through **InstaPay, Vodafone Cash, or Orange Cash**: small sellers, delivery workers, freelancers, and online sellers on Instagram and Facebook Marketplace. They need to know a payment is real before releasing goods or services. The call, message, and link protection features keep the same users safe from the scams around that moment.
+
+## How it works
+
+WAQI isn't five separate tools bolted together. Each engine extracts raw signals, not verdicts. A central orchestrator combines all of them into a single **risk score, scam type, and confidence**, and explains the result in plain language.
+
+| Engine | What it does |
 |---|---|
-| [waqi-app](https://github.com/waqi-app/waqi-app) | React Native app + native Android modules, Supabase backend, Dockerized link/QR sandbox |
-| [waqi-ml](https://github.com/waqi-app/waqi-ml) | Egyptian-Arabic message NLP, receipt forensics, XGBoost + SHAP orchestrator |
-| [waqi-website](https://github.com/waqi-app/waqi-website) | Public landing page (this org profile links to it) |
-| [WAQI-QR](https://github.com/waqi-app/WAQI-QR) | QR awareness campaign: tracking, scam simulation, admin dashboard |
+| **Call Protection** | Checks incoming numbers against a crowd-sourced scam number database |
+| **Message Protection** | Detects scam intent in SMS and WhatsApp messages, including Egyptian Arabic and Arabizi |
+| **Link & QR Sandbox** | Opens links and QR destinations in an isolated container, follows the redirect chain, and reports what the page really is |
+| **Receipt Forensics** | Detects fake or manipulated payment screenshots in Egyptian payment formats |
+| **Orchestrator** | Fuses all signals with XGBoost, explains the decision with SHAP, and uses an LLM only to narrate it |
 
-Team workflow lives in each repo's `WORKFLOW.md`: `dev` is default, feature branches + PR review, no direct pushes to `main`/`dev`.
+All engines also write to a shared correlation store, so a number reported on a scam call is flagged instantly if it later shows up in a WhatsApp message.
 
-## Live
+## Privacy
 
-- Website: https://waqi-app.github.io/waqi-website/
+- The link sandbox never stores screenshots. Only the plain-language explanation of the site is kept.
+- Receipt analysis stores extracted text only, never the images.
+
+## Repositories
+
+| Repo | What's in it |
+|---|---|
+| [`waqi-app`](../../waqi-app) | React Native app, Android native modules, Supabase migrations and functions, the Docker link/QR sandbox, docs and the project website |
+| [`waqi-ml`](../../waqi-ml) | Training and evaluation code for the message model, receipt forensics, and the orchestrator |
+
+Datasets and trained models live in our private Hugging Face organization, not in git.
+
+## Contributing
+
+`dev` is the default branch and `main` is production. Work on a feature branch, open a PR into `dev`, and get a review. Each repo's `WORKFLOW.md` has the full team rules.
+
+## Project site
+
+Documentation and an overview of the project: *(link to the GitHub Pages site once it's live)*
